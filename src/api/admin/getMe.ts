@@ -11,17 +11,18 @@ const method = APIMethod.GET;
 const auth = APIAuth.ALL_ADMIN;
 
 const main: RequestHandler = async (req, res) => {
-    const session = req.admin.data;
-    const config = new Config();
-    return res.send({
-        roleName: session.roleId === config.roleSuperAdmin ? "super-admin" : "admin",
-        ...session,
-    });
+  const session = req.admin.data;
+  const config = new Config();
+  return res.send({
+    roleName:
+      session.roleId === config.roleSuperAdmin ? "super-admin" : "admin",
+    ...session,
+  });
 };
 
 export const getMeAdmin: IApiRouter = {
-    path,
-    method,
-    main,
-    auth,
+  path,
+  method,
+  main,
+  auth,
 };
