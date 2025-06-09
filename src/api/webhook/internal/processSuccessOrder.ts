@@ -224,6 +224,17 @@ const main: RequestHandler = async (req, res) => {
             providerId: productProvider.id,
             extInvoiceNumber: createTrx.ref_id,
           });
+        } else if (createTrx.status === "gagal") {
+          await orderService.updateBy({
+            by: "id",
+            value: order.id,
+            data: {
+              isError: true,
+              isCanResend: false,
+              remark: createTrx.message + " (Infokan developer)",
+              extTrxId: createTrx.trx_id,
+            },
+          });
         } else {
           await orderService.updateBy({
             by: "id",

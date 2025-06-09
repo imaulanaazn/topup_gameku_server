@@ -63,15 +63,15 @@ export class MidtransService {
           order_id: data.order.invoiceId,
         },
         customer_details: {
-          email: data.customer.email || "guess@gasskeuntopup.com",
+          email: data.customer.email || "guess@topupgameku.com",
           first_name: data.customer.name || "guess",
-          phone: data.customer.mobileNumber || "089123456789",
+          phone: data.customer.mobileNumber || "08895501350",
         },
         ...(data.paymentMethod.cd === "mandiri"
           ? {
               echannel: {
                 bill_info1: "Merchant :",
-                bill_info2: "Gasskeun Topup",
+                bill_info2: "Topup Gameku",
                 bill_info3: "Order ID:",
                 bill_info4: data.order.invoiceId,
                 bill_info5: "Game :",
@@ -89,7 +89,7 @@ export class MidtransService {
                 ...(data.paymentMethod.cd === "permata"
                   ? {
                       permata: {
-                        recipient_name: "Gasskeun Topup",
+                        recipient_name: "Topup Gameku",
                       },
                     }
                   : {}),
@@ -113,9 +113,9 @@ export class MidtransService {
           order_id: data.order.invoiceId,
         },
         customer_details: {
-          email: data.customer.email || "guess@gasskeuntopup.com",
+          email: data.customer.email || "guess@topupgameku.com",
           first_name: data.customer.name || "guess",
-          phone: data.customer.mobileNumber || "089123456789",
+          phone: data.customer.mobileNumber || "08895501350",
         },
         qris: {
           acquirer: "gopay",
@@ -136,9 +136,9 @@ export class MidtransService {
           order_id: data.order.invoiceId,
         },
         customer_details: {
-          email: data.customer.email || "guess@gasskeuntopup.com",
+          email: data.customer.email || "guess@topupgameku.com",
           first_name: data.customer.name || "guess",
-          phone: data.customer.mobileNumber || "089123456789",
+          phone: data.customer.mobileNumber || "08895501350",
         },
         ...(data.paymentMethod.cd === "gopay"
           ? {
@@ -152,12 +152,12 @@ export class MidtransService {
         ...(data.paymentMethod.cd === "shopeepay"
           ? {
               shopeepay: {
-                callback_url:
-                  this.config.feUrl + "/payment/" + data.order.invoiceId,
+                callback_url: "https://t.me/topup_gameku_bot",
               },
             }
           : {}),
       };
+      console.log("SHOPEE PAY TRX", body);
       return await this.createTransaction(body);
     } catch (error) {
       console.log(error);
@@ -173,9 +173,9 @@ export class MidtransService {
           order_id: data.order.invoiceId,
         },
         customer_details: {
-          email: data.customer.email || "guess@gasskeuntopup.com",
+          email: data.customer.email || "guess@topupgameku.com",
           first_name: data.customer.name || "guess",
-          phone: data.customer.mobileNumber || "089123456789",
+          phone: data.customer.mobileNumber || "08895501350",
         },
         cstore: {
           store: data.paymentMethod.cd,
@@ -188,6 +188,7 @@ export class MidtransService {
   }
 
   private async createTransaction(params: any): Promise<any> {
+    console.log("SHOPEEPAY CREATE TRX : ", params);
     return this.request("/charge", {
       method: "POST",
       body: JSON.stringify(params),

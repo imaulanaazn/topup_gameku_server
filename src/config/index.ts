@@ -67,5 +67,5 @@ export class Config {
   midtransUrl =
     process.env.MIDTRANS_URL || "https://api.sandbox.midtrans.com/v2";
   midtransServerKey =
-    process.env.MIDTRANS_SERVER_KEY || "SB-Mid-server-QNTwShEua9-sqf2eYrGNx-KW";
+    process.env.MIDTRANS_SERVER_KEY || "SB-Mid-server-Ib4NzM_M1zUhIojHB7NvZzcb";
 }

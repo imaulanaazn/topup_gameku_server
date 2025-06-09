@@ -403,13 +403,6 @@ const main: RequestHandler = async (req, res) => {
         (item) => item.name === "deeplink-redirect"
       );
       redisService.set(`qr:payment:${invoiceId}`, getLink?.url || "", 15 * 60);
-    } else if (payment.category === PaymentsCategory.RETAIL) {
-      charge = await midtransService.createRetail({
-        order,
-        orderDetail,
-        paymentMethod: payment,
-        customer,
-      });
     }
     if (charge) {
       await invoiceService.updateBy({
@@ -442,28 +435,6 @@ const main: RequestHandler = async (req, res) => {
       );
     }
   }
-
-  io.emit("order:new", {
-    id: order.id,
-    invoiceId: invoiceId,
-    customerId: order.customerId,
-    paymentMethodId: order.paymentMethodId,
-    game: order.game,
-    productName: order.productName,
-    paymentMethod: order.paymentMethod,
-    totalAmt: order.totalAmt,
-    feeAmt: order.feeAmt,
-    discAmt: order.discAmt,
-    status: order.status,
-    createdAt: order.createdAt,
-    updatedAt: order.updatedAt,
-    completedAt: order.completedAt,
-    productId: product.id,
-    amount: orderDetail.amount,
-    quantity: orderDetail.quantity,
-    logoUrl: game.logoUrl,
-    mobileNumber: customer.mobileNumber,
-  });
 
   return res.send({
     invoice: invoiceId,

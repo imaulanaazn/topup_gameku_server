@@ -6,7 +6,7 @@ import {
 } from "@helper/logger";
 import { NextFunction, Request, Response } from "express";
 
-const webhookEndpoint = ["/api/v1/webhook/lapakgaming-product"];
+// const webhookEndpoint = ["/api/v1/webhook/lapakgaming-product"];
 const cronjobEndpoint = ["/api/v1/sync-product-tokovoucher"];
 const cronjobInternalEndpoint = [
   "/api/v1/set-expired-payment",
@@ -19,9 +19,10 @@ const cronjobKupon = [
 
 const requestTime = (req: Request, res: Response, next: NextFunction) => {
   const messageStart = `${req.method} ${req.originalUrl} -- start`;
-  if (webhookEndpoint.includes(req.originalUrl)) {
-    createLogWebhook().log(messageStart);
-  } else if (cronjobEndpoint.includes(req.originalUrl)) {
+  // if (webhookEndpoint.includes(req.originalUrl)) {
+  //   createLogWebhook().log(messageStart);
+  // } else
+  if (cronjobEndpoint.includes(req.originalUrl)) {
     createLogCronjob().log(messageStart);
   } else if (cronjobInternalEndpoint.includes(req.originalUrl)) {
     createLogCronjobInternal().log(messageStart);
@@ -36,9 +37,10 @@ const requestTime = (req: Request, res: Response, next: NextFunction) => {
     const endTime = new Date().getTime();
     const requestTime = endTime - startTime;
     const messageFinish = `[${res.statusCode}] ${req.method} ${req.originalUrl} - end [${requestTime}ms]`;
-    if (webhookEndpoint.includes(req.originalUrl)) {
-      createLogWebhook().log(messageFinish);
-    } else if (cronjobEndpoint.includes(req.originalUrl)) {
+    // if (webhookEndpoint.includes(req.originalUrl)) {
+    //   createLogWebhook().log(messageFinish);
+    // } else
+    if (cronjobEndpoint.includes(req.originalUrl)) {
       createLogCronjob().log(messageFinish);
     } else if (cronjobInternalEndpoint.includes(req.originalUrl)) {
       createLogCronjobInternal().log(messageFinish);

@@ -52,7 +52,8 @@ const main = async (req: Request, res: Response) => {
   console.log("Response : " + orderFromTokoVoucher.status);
   if (!orderFromTokoVoucher.status) {
     throw new BusinessError(
-      orderFromTokoVoucher.error_msg || "Gagal mendapatkan status order",
+      (orderFromTokoVoucher.error_msg || "Gagal mendapatkan status order") +
+        " Silahkan hubungi CS jika sudah membayar",
       ErrorType.BadRequest
     );
   }
@@ -66,7 +67,9 @@ const main = async (req: Request, res: Response) => {
 
   if (!order) {
     throw new BusinessError(
-      "Tidak ditemukan order dengan trx id : " + orderFromTokoVoucher.trx_id,
+      "Tidak ditemukan order dengan trx id : " +
+        orderFromTokoVoucher.trx_id +
+        " Silahkan hubungi CS jika sudah membayar",
       ErrorType.NotFound
     );
   }
@@ -114,6 +117,48 @@ const main = async (req: Request, res: Response) => {
     },
   });
 };
+
+// const main = async (req: Request, res: Response) => {
+//   const io = req.io;
+//   const param = new Validator(req, res).process<{
+//     invoice: string;
+//   }>(schemaValidation, ValidatorType.PARAMS);
+//   const invoiceId = param.invoice;
+//   const orderService = new OrderService();
+//   const config = new Config();
+
+//   const order = await orderService.model.scope("withAmtBuy").findOne({
+//     where: {
+//       invoiceId: invoiceId,
+//     },
+//   });
+
+//   if (!order) {
+//      throw new BusinessError(
+//         "Tidak ditemukan order dengan invoice id : " +
+//         invoiceId +
+//         " Silahkan hubungi CS jika sudah membayar",
+//         ErrorType.NotFound
+//      );
+//   }
+
+//   await orderService.updateBy({
+//     by: "id",
+//     value: order.id,
+//     data: {
+//       status: OrderStatuses.SUCCESS,
+//       completedAt: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+//     },
+//   });
+
+//   return res.status(200).send({
+//     status: "success",
+//     message: "Berhasil mendapatkan status order",
+//     data: {
+//       invoiceId: invoiceId,
+//     },
+//   });
+// };
 
 export const getOrderStatus: IApiRouter = {
   path,
