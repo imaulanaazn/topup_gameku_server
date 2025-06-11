@@ -70,10 +70,9 @@ const schemaValidation: Validation[] = [
     required: true,
   },
   {
-    name: "mobileNumber",
+    name: "telegramId",
     type: "string",
     required: true,
-    isMobileNo: true,
   },
   {
     name: "cashtag",
@@ -94,7 +93,7 @@ const main: RequestHandler = async (req, res) => {
     productId: string;
     quantity: number;
     paymentId: string;
-    mobileNumber: string;
+    telegramId: string;
     cashtag?: string;
     customerId?: string;
   }>(schemaValidation, ValidatorType.BODY);
@@ -123,63 +122,35 @@ const main: RequestHandler = async (req, res) => {
 
   console.log("REQUEST ORDER");
 
-  const convertedNumber = body.mobileNumber.replace(
-    /^(\+62|62|0)?(\d+)/,
-    "0$2"
-  );
-  const check = validator.isMobilePhone(convertedNumber, "id-ID");
-  if (body.mobileNumber && !check) {
+  if (!body.telegramId) {
     throw new BusinessError(
-      "Nomor telephone tidak valid",
+      "Telegram ID tidak boleh diisi pada order ini",
       ErrorType.BadRequest
     );
   }
 
   let customer;
 
-  const session = req.cookies.session_gasskeun_user;
-  if (session) {
-    const encryptService = new EncryptionService(EncryptJoseType.USER);
-    try {
-      const decode = await encryptService.decryptData<CustomerDto>(session);
-      if (decode.isExpired) {
-        res.clearCookie("session_gasskeun_user");
-        return res.status(ErrorStatusCode.Authorization).send({
-          errorCode: ErrorType.Authorization,
-          message: "Cannot access to this resource",
-        });
-      }
-      customer = decode.data;
-    } catch (error) {
-      console.error(error);
-      res.clearCookie("session_gasskeun_user");
-      return res.status(ErrorStatusCode.Authorization).send({
-        errorCode: ErrorType.Authorization,
-        message: "Cannot access to this resource",
-      });
-    }
-  } else {
-    customer = await customerService.model.findOne({
-      where: {
-        mobileNumber: convertedNumber,
-        roleId: {
-          [Op.in]: [config.roleGuest, config.roleUser],
-        },
+  customer = await customerService.model.findOne({
+    where: {
+      telegramId: body.telegramId,
+      roleId: {
+        [Op.in]: [config.roleGuest, config.roleUser],
       },
-    });
+    },
+  });
 
-    if (!customer && convertedNumber) {
-      customer = await customerService.create({
-        id: uuid(),
-        roleId: config.roleGuest,
-        mobileNumber: convertedNumber,
-        isActive: true,
-        isRegistered: false,
-        status: CustomerStatuses.ACTIVE,
-        loginAttemps: 0,
-        lockUntil: null,
-      });
-    }
+  if (!customer && body.telegramId) {
+    customer = await customerService.create({
+      id: uuid(),
+      roleId: config.roleGuest,
+      telegramId: body.telegramId,
+      isActive: true,
+      isRegistered: false,
+      status: CustomerStatuses.ACTIVE,
+      loginAttemps: 0,
+      lockUntil: null,
+    });
   }
 
   const payment = await paymentMethodService.model.findOne({
@@ -350,7 +321,6 @@ const main: RequestHandler = async (req, res) => {
     type: OrderType.TOPUP,
     ipAddress: clientIp,
     isNew: checkingOrder <= 0,
-    isGuest: !session,
   });
 
   const orderDetail = await orderDetailService.create({

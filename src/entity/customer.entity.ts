@@ -54,11 +54,11 @@ export class CustomerEntity extends Model<CustomerEntity> {
 
   @Unique(true)
   @Column(DataType.STRING(255))
-  mobileNumber!: string;
+  mobileNumber: string;
 
   @Unique(true)
   @Column(DataType.STRING(255))
-  telegramId: string;
+  telegramId!: string;
 
   @Column(DataType.STRING(255))
   password!: string;

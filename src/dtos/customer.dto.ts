@@ -8,8 +8,8 @@ export class CustomerDto extends MainDto {
   name?: string;
   image?: string;
   email?: string;
-  mobileNumber: string;
-  telegramId?: string;
+  mobileNumber?: string;
+  telegramId: string;
   password?: string;
   isActive: boolean;
   loginAttemps: number;
