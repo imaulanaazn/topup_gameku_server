@@ -58,7 +58,7 @@ export class Config {
 
   minioUrl = process.env.MINIO_URL || "154.26.129.236";
   minioPort = parseInt(process.env.MINIO_PORT) || 9100;
-  minioUsername = process.env.MINIO_USERNAME || "topupgameku";
+  minioUsername = process.env.MINIO_USERNAME || "gasskeuntopup";
   minioPassword = process.env.MINIO_PASSWORD || "N0P@ssw0rd";
 
   imageUrl =

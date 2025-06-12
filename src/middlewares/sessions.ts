@@ -66,7 +66,6 @@ export const authAdmin =
       const decode = await encryptService.decryptData<DataEncryptAdmin>(
         session
       );
-      console.log(decode);
 
       const adminRoles = decode.data.roles;
       if (auth === APIAuth.ALL_ADMIN) {
@@ -81,9 +80,7 @@ export const authAdmin =
         next();
         return;
       }
-      console.log(adminRoles);
-      console.log(auth);
-      console.log(adminRoles.includes(auth));
+
       if (adminRoles.includes(auth)) {
         req.admin = decode;
         console.log(req.admin);
