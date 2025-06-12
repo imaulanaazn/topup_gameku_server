@@ -67,7 +67,7 @@ const getApp = async (
 
     app.use(
       session({
-        name: "gameku_session",
+        name: "gasskeun_session",
         secret: config.secretSession,
         resave: false,
         saveUninitialized: true,

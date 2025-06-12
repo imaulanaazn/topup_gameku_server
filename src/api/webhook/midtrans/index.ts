@@ -63,7 +63,7 @@ const main: RequestHandler = async (req, res) => {
         method: "POST",
         headers: {
           "content-type": "application/json",
-          "x-gameku-key": config.xApiKeyProcessOrder,
+          "x-gasskeun-key": config.xApiKeyProcessOrder,
         },
         body: JSON.stringify({
           customerId: invoice.order.customer.id,

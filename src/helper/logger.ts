@@ -3,7 +3,7 @@ import DailyRotateFile from "winston-daily-rotate-file";
 import util from "util";
 
 const transport = new DailyRotateFile({
-  filename: "logs/logger-management-topupgameku %DATE%.log",
+  filename: "logs/logger-management-gasskeuntopup %DATE%.log",
   datePattern: "YYYY-MM-DD",
   maxSize: "100m",
   maxFiles: "120d",

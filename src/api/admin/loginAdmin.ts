@@ -90,7 +90,7 @@ const main: RequestHandler = async (req, res) => {
     "day"
   );
 
-  res.cookie("session_gameku_admin", encrypt, {
+  res.cookie("session_gasskeun_admin", encrypt, {
     httpOnly: true,
     maxAge: config.maxAgeLogin * 1000,
     // domain: config.domainReseller,
