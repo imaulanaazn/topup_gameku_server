@@ -143,9 +143,9 @@ export class MidtransService {
         ...(data.paymentMethod.cd === "gopay"
           ? {
               gopay: {
-                enable_callback: true,
-                callback_url:
-                  this.config.feUrl + "/payment/" + data.order.invoiceId,
+                enable_callback: false,
+                // callback_url:
+                // this.config.feUrl + "/payment/" + data.order.invoiceId,
               },
             }
           : {}),
