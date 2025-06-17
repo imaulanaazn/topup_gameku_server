@@ -10,19 +10,4 @@ export class CustomerService extends MainService<CustomerEntity, CustomerDto> {
     const config = new Config();
     this.config = config;
   }
-
-  async findUserWithPasswordBy<K extends keyof CustomerDto>(
-    column: K,
-    value: CustomerDto[K]
-  ): Promise<CustomerEntity> {
-    return await this.model
-      .scope("withPassword")
-      .scope("withRole")
-      .findOne({
-        where: {
-          [column]: value,
-          roleId: this.config.roleUser,
-        },
-      });
-  }
 }

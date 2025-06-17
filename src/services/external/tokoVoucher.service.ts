@@ -128,18 +128,6 @@ export class TokoVoucherService {
     this.member_code = member_code;
   }
 
-  // async getProducts(): Promise<ResponseGetGames> {
-  //   try {
-  //     return await this.request({
-  //       method: "GET",
-  //       endpoint: `/produk/code?member_code=${this.member_code}&signature=${this.signature}`,
-  //     });
-  //   } catch (error) {
-  //     const message = `An error occurred: ${error.message}`;
-  //     throw new Error(message);
-  //   }
-  // }
-
   async getListOperator(categoryId: number): Promise<ResponseGetListOp> {
     try {
       return await this.request({
@@ -177,34 +165,6 @@ export class TokoVoucherService {
       throw new Error(message);
     }
   }
-
-  // async getProductByGamesCode(data: GetProductBy): Promise<ResponseGetProduct> {
-  //     const param = new URLSearchParams();
-  //     data.gameCd && param.append("category_code", data.gameCd);
-  //     data.productCd && param.append("product_code", data.productCd);
-
-  //     try {
-  //         return await this.request({
-  //             method: "GET",
-  //             endpoint: "/api/product?" + param,
-  //         });
-  //     } catch (error) {
-  //         const message = `An error occurred: ${error.message}`;
-  //         throw new Error(message);
-  //     }
-  // }
-
-  // async getAllProducts(): Promise<ResponseGetProduct> {
-  //     try {
-  //         return await this.request({
-  //             method: "GET",
-  //             endpoint: "/api/all-products?",
-  //         });
-  //     } catch (error) {
-  //         const message = `An error occurred: ${error.message}`;
-  //         throw new Error(message);
-  //     }
-  // }
 
   async createOrder(data: CreateTrx): Promise<ResponseCreateTrx> {
     const body = {
