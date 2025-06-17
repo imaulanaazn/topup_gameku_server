@@ -368,6 +368,8 @@ const main: RequestHandler = async (req, res) => {
         customer,
       });
 
+      console.log("CHARGE EWALLET " + JSON.stringify(charge));
+
       const redisService = new RedisService();
       const getLink = charge?.actions?.find(
         (item) => item.name === "deeplink-redirect"

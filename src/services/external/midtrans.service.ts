@@ -188,7 +188,6 @@ export class MidtransService {
   }
 
   private async createTransaction(params: any): Promise<any> {
-    console.log("SHOPEEPAY CREATE TRX : ", params);
     return this.request("/charge", {
       method: "POST",
       body: JSON.stringify(params),
